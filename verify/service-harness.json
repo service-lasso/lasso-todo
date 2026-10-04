@@ -1,10 +1,12 @@
 {
-  "serviceId": "echo-service",
+  "serviceId": "todo",
   "artifact": {
-    "path": "dist/echo-service-win32.zip",
+    "path": "dist/lasso-todo-win32.zip",
     "kind": "archive"
   },
-  "dependencies": [],
+  "dependencies": [
+    "@node"
+  ],
   "lifecycle": {
     "install": true,
     "config": true,

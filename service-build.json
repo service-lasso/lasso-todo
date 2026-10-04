@@ -1,0 +1,5 @@
+{
+  "kind": "node",
+  "name": "lasso-todo",
+  "runtimeEntry": "runtime/server.mjs"
+}
