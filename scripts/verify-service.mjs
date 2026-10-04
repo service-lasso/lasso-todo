@@ -51,5 +51,5 @@ try {
   await writeFile(path.join(root, 'output', 'package-verification.json'), JSON.stringify({ platform, archiveHash, todoId: todo.id, http: 'passed', restartPersistence: 'passed', boundary: 'archive consumer; Core managed lifecycle verified separately' }, null, 2) + '\n');
   console.log('Fresh packaged Todo HTTP, invalid-input and restart persistence passed');
 } finally { if (child) await stop(); }
-const ssoCheck = spawnSync(process.execPath, ['--test', path.join(root, 'tests/todo-sso.test.mjs')], { env: { ...process.env, SSO_RUNTIME_ROOT: consumer }, stdio: 'inherit', windowsHide: true });
+const ssoCheck = spawnSync(process.execPath, ['--test', ...['todo-sso.test.mjs','api-auth-config.test.mjs','todo-api-sso.test.mjs'].map(name => path.join(root, 'tests', name))], { env: { ...process.env, SSO_RUNTIME_ROOT: consumer }, stdio: 'inherit', windowsHide: true });
 if (ssoCheck.error || ssoCheck.status !== 0) throw Error('Packaged OIDC consumer protocol verification failed');

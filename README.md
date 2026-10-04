@@ -1,5 +1,9 @@
 # Lasso Todo
 
+API-mode SSO also requires a secured `lasso-todo-api` consumer declaring `zitadel-introspection-v1`. Todo keeps the user's access token in its server-side session and forwards it to the API; it never forwards browser Authorization headers or ID tokens. The API independently introspects the token with Zitadel. Partial or incompatible configuration stops startup, rather than restoring anonymous access.
+
+After registering the Todo Web app and a separate Basic API app in the same project, stop Todo and the API. Use `configure-sso.mjs <todo-directory> enable <https-issuer> <web-client-id> <project-id> <api-client-id> <private-api-secret-file> [public-ca-file]`. Credential bytes never enter either manifest. Keep the credential file operator-only and outside source/build resources. `disable` is an explicit anonymous downgrade of both local services. The older four-argument helper only stages configuration when no API manifest exists; it cannot establish API-mode SSO acceptance.
+
 GitHub-generated from `service-lasso/service-template`; `template-origin.json` records the exact develop provenance. This repository owns the real `todo` service used in the progressive tutorials.
 
 Use Node22+, then `npm ci`, `npm test`, `npm run package`, `npm run verify`. The template package/test/verify `.ps1`/`.sh` entrypoints are adapted for Todo. Fresh archive verification exercises actual HTTP, invalid input and restart persistence. Core-managed lifecycle is independent evidence.

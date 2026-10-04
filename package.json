@@ -8,7 +8,7 @@
   },
   "description": "Template-derived managed Todo learning service",
   "scripts": {
-    "test": "node --test tests/todo-service.test.mjs tests/todo-sso.test.mjs",
+    "test": "node --test tests/todo-service.test.mjs tests/todo-sso.test.mjs tests/api-auth-config.test.mjs tests/todo-api-sso.test.mjs",
     "package": "node scripts/package.mjs",
     "verify": "node scripts/verify-service.mjs"
   },
