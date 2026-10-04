@@ -1,0 +1,71 @@
+name: development-template-candidate
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [develop]
+
+permissions:
+  contents: read
+
+jobs:
+  bind-candidate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Verify the checked-in template contract
+        run: node scripts/generate-template-contract.mjs && git diff --exit-code -- template-contract.json
+      - name: Run template contract regression tests
+        run: node --test tests/template-contract.test.mjs
+      - name: Bind immutable development candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p candidate
+          git archive --format=tar "$GITHUB_SHA" | gzip -n > candidate/service-template.tar.gz
+          archive_sha256="$(sha256sum candidate/service-template.tar.gz | awk '{print $1}')"
+          export ARCHIVE_SHA256="$archive_sha256"
+          node - <<'NODE'
+          const fs = require('node:fs');
+          const policy = require('./template-contract.json');
+          const candidate = {
+            schemaVersion: 1,
+            kind: 'development-template-candidate',
+            templateCommit: process.env.GITHUB_SHA,
+            templateVersion: policy.templateVersion,
+            contractDigest: policy.contractDigest,
+            archiveSha256: process.env.ARCHIVE_SHA256
+          };
+          fs.writeFileSync('candidate/template-candidate.json', JSON.stringify(candidate, null, 2) + '\n');
+          NODE
+      - name: Verify the owner-controlled candidate tuple
+        shell: bash
+        run: |
+          set -euo pipefail
+          project_root="$(mktemp -d)"
+          tar -xzf candidate/service-template.tar.gz -C "$project_root"
+          export PROJECT_ROOT="$project_root"
+          node - <<'NODE'
+          const fs = require('node:fs');
+          const path = require('node:path');
+          const candidate = require('./candidate/template-candidate.json');
+          fs.writeFileSync(path.join(process.env.PROJECT_ROOT, 'template-provenance.json'), JSON.stringify({
+            schemaVersion: 1,
+            templateRepository: 'service-lasso/service-template',
+            templateCommit: candidate.templateCommit,
+            templateVersion: candidate.templateVersion,
+            contractDigest: candidate.contractDigest,
+            origin: { kind: 'local-archive', archiveSha256: candidate.archiveSha256 }
+          }, null, 2) + '\n');
+          NODE
+          node scripts/verify-template-contract.mjs --template-root "$GITHUB_WORKSPACE" --project-root "$project_root" --candidate candidate/template-candidate.json --candidate-archive candidate/service-template.tar.gz
+      - uses: actions/upload-artifact@v4
+        with:
+          name: template-candidate-${{ github.sha }}
+          path: candidate/
+          if-no-files-found: error

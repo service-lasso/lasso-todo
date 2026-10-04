@@ -1,0 +1,7 @@
+---
+description: Testing proof standards
+alwaysApply: true
+---
+# Testing
+
+Tests are evidence for claims. Exercise success, invalid input and relevant failure paths; state whether evidence is direct, partial or blocked.

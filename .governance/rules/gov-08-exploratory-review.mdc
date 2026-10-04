@@ -1,0 +1,7 @@
+---
+description: Exploratory review
+alwaysApply: true
+---
+# Exploratory review
+
+Exploration does not change product code. Classify scenarios as Validated, Invalidated, Blocked or Uncovered-spec-gap and create follow-up artifacts for every non-validated result.
