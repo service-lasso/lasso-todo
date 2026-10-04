@@ -6,11 +6,38 @@
 <body>
 <h1>Todo app</h1>
 <p>This app runs as a Service Lasso service.</p>
-<form><label>Todo title <input name="title" required maxlength="200"></label> <button>Add</button></form>
+<p id="identity" aria-live="polite"></p>
+<p><a id="signin" href="/auth/login" hidden>Sign in with Zitadel</a> <button id="signout" type="button" hidden>Sign out</button></p>
+<form hidden><label>Todo title <input name="title" required maxlength="200"></label> <button>Add</button></form>
 <p id="status" role="status"></p>
 <ul id="todos"></ul>
 <script>
 const status = document.querySelector('#status');
+let session;
+const form = document.querySelector('form');
+async function identity() {
+  const response = await fetch('/auth/session');
+  if (!response.ok) throw new Error('Could not check sign-in.');
+  session = await response.json();
+  const allowed = !session.enabled || session.authenticated;
+  form.hidden = !allowed;
+  document.querySelector('#signin').hidden = !session.enabled || Boolean(session.authenticated);
+  document.querySelector('#signout').hidden = !session.authenticated;
+  document.querySelector('#identity').textContent = session.authenticated ? `Signed in as ${session.name}. This tutorial uses a shared Todo list.` : session.enabled ? 'Sign in to use the shared Todo list.' : '';
+  if (new URL(location.href).searchParams.has('signin')) {
+    status.textContent = 'Sign-in was cancelled or could not be verified. Try again.';
+    history.replaceState(null, '', '/');
+  }
+  return allowed;
+}
+document.querySelector('#signout').addEventListener('click', async () => {
+  try {
+    const response = await fetch('/auth/logout', { method: 'POST', headers: { 'x-todo-csrf': session.csrf } });
+    if (!response.ok) throw new Error('Could not sign out.');
+    const result = await response.json();
+    location.assign(result.redirect);
+  } catch (error) { status.textContent = error.message; }
+});
 async function list() {
   const response = await fetch('/todos');
   if (!response.ok) throw new Error('Could not load todos. Check this service in Admin.');
@@ -27,14 +54,14 @@ document.querySelector('form').addEventListener('submit', async event => {
   event.preventDefault();
   try {
     const input = event.target.elements.title;
-    const response = await fetch('/todos', { method: 'POST', headers: {'content-type': 'application/json'}, body: JSON.stringify({title: input.value}) });
+    const response = await fetch('/todos', { method: 'POST', headers: {'content-type': 'application/json', ...(session?.csrf ? {'x-todo-csrf': session.csrf} : {})}, body: JSON.stringify({title: input.value}) });
     if (!response.ok) throw new Error((await response.json()).error);
     input.value = '';
     await list();
     status.textContent = 'Saved.';
   } catch (error) { status.textContent = error.message; }
 });
-list().catch(error => { status.textContent = error.message; });
+identity().then(allowed => { if (allowed) return list(); }).catch(error => { form.hidden = true; status.textContent = error.message; });
 </script>
 </body>
 </html>

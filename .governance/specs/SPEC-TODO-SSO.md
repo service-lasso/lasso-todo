@@ -1,0 +1,7 @@
+# Optional Todo sign-in (#5 / Core #1673)
+
+- SSO-1: Disabled by default; existing JSON/PostgreSQL/API stages and shared retained Todo IDs remain unchanged. Enabling sign-in protects every Todo read/write; health remains public.
+- SSO-2: Server-side maintained OIDC implementation uses discovery, Authorization Code + S256 PKCE, one-time state, nonce and signed ID-token issuer/audience/time validation. Exact configured origin/callback only, HTTPS issuer required. Fail closed on provider failure, malformed callback or partial configuration; never expose tokens in HTML, logs or JSON.
+- SSO-3: Bounded opaque server-side sessions, HttpOnly SameSite=Lax cookies, finite lifetime no longer than ID-token expiry, rotation after login and restart invalidation. Session mutation requires exact Origin and a per-session CSRF token. Logout destroys local session before provider logout; no open redirect.
+- SSO-4: Packaged non-secret configure-sso helper preserves data/storage settings and requires a sibling Zitadel manifest; enable/disable changes dependencies/config only. Server UI supports sign-in, cancellation/error, signed-in name and sign-out without unsafe HTML rendering.
+- SSO-5: Existing tests remain protected; protocol integration tests cover valid signed tokens and negative issuer/audience/signature/state/nonce/expiry/replay/CSRF/outage, capacity and restart. Archive contains consumer/helper; actual released consumer and actual local Zitadel browser proof remain separate gates. No production/GA or per-user authorization claim.
