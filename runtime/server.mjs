@@ -14,6 +14,8 @@ try { todos = JSON.parse(await readFile(file, 'utf8')); }
 catch (error) { if (error.code !== 'ENOENT') throw error; todos = []; }
 if (!Array.isArray(todos)) throw new Error('Invalid Todo data; preserve the file and inspect it.');
 const html = await readFile(new URL('./index.html', import.meta.url));
+const { createAuth } = await import('./auth.mjs');
+const auth = await createAuth(process.env, port);
 let database;
 if (process.env.TODO_DATABASE_STATE) {
   const { openDatabase } = await import('./database.mjs');
@@ -34,6 +36,8 @@ const server = createServer(async (request, response) => {
     response.end(JSON.stringify(value));
   };
   try {
+    if (auth && await auth.handle(request, response)) return;
+    if (!auth && request.method === 'GET' && request.url === '/auth/session') return send(200, { enabled: false });
     if (request.method === 'GET' && request.url === '/healthz') {
       if (database) await database.health();
       if (api) { const health = await fetch(api + '/healthz', { signal: AbortSignal.timeout(5000) }); if (!health.ok) throw new Error('API unavailable'); }
@@ -44,10 +48,12 @@ const server = createServer(async (request, response) => {
       return response.end(html);
     }
     if (request.method === 'GET' && request.url === '/todos') {
+      if (auth && !auth.authorize(request, response)) return;
       if (api) { const result = await fetch(api + '/todos', { signal: AbortSignal.timeout(5000) }); return send(result.status, await result.json()); }
       return send(200, database ? await database.list() : todos);
     }
     if (request.method !== 'POST' || request.url !== '/todos') return send(404, { error: 'Not found' });
+    if (auth && !auth.authorize(request, response)) return;
     if (!request.headers['content-type']?.startsWith('application/json')) return send(415, { error: 'Use application/json' });
     if (request.headers.origin && request.headers.origin !== `http://127.0.0.1:${port}`) return send(403, { error: 'Use this app origin' });
     let body = '';

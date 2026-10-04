@@ -18,7 +18,8 @@ function run(command, args, options = {}) {
   if (result.status !== 0) throw new Error(`${command} failed: ${result.status}`);
 }
 if (build.kind === 'node') {
-  for (const name of ['server.mjs', 'index.html', 'database.mjs']) await cp(path.join(root, 'runtime', name), path.join(stage, 'runtime', name));
+  for (const name of ['server.mjs', 'index.html', 'database.mjs', 'auth.mjs']) await cp(path.join(root, 'runtime', name), path.join(stage, 'runtime', name));
+  await cp(path.join(root, 'scripts', 'configure-sso.mjs'), path.join(stage, 'configure-sso.mjs'));
   await cp(path.join(root, 'node_modules'), path.join(stage, 'runtime', 'node_modules'), { recursive: true });
 } else if (build.kind === 'go') {
   const executable = platform === 'win32' ? 'todo-api.exe' : 'todo-api';

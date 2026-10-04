@@ -3,11 +3,12 @@
   "private": true,
   "type": "module",
   "dependencies": {
+    "openid-client": "6.8.8",
     "pg": "8.23.0"
   },
   "description": "Template-derived managed Todo learning service",
   "scripts": {
-    "test": "node --test tests/todo-service.test.mjs",
+    "test": "node --test tests/todo-service.test.mjs tests/todo-sso.test.mjs",
     "package": "node scripts/package.mjs",
     "verify": "node scripts/verify-service.mjs"
   },
