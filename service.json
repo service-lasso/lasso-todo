@@ -38,16 +38,6 @@
     "TODO_PORT": "${endpoint.web.port}",
     "TODO_DATA_FILE": "${SERVICE_ROOT}/data/todos.json"
   },
-  "healthchecks": [
-    {
-      "id": "http-health",
-      "type": "http",
-      "url": "http://127.0.0.1:${endpoint.web.port}/healthz",
-      "expected_status": 200,
-      "retries": 80,
-      "interval": 250
-    }
-  ],
   "meta": {
     "license": "Apache-2.0",
     "repository": {
@@ -96,5 +86,13 @@
         }
       }
     }
+  },
+  "healthcheck": {
+    "id": "http-health",
+    "type": "http",
+    "url": "http://127.0.0.1:${endpoint.web.port}/healthz",
+    "expected_status": 200,
+    "retries": 80,
+    "interval": 250
   }
 }
