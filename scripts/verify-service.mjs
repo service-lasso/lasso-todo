@@ -26,7 +26,7 @@ const file = path.join(consumer, 'data', 'todos.json');
 let child, closed;
 const start = async () => {
   child = spawn(process.execPath, [path.join(consumer, 'runtime', 'server.mjs')], {
-    cwd: consumer, env: { ...process.env, TODO_PORT: String(port), TODO_DATA_FILE: file, TODO_DATABASE_STATE: '', TODO_API_STATE: '', TODO_OIDC_ISSUER: '', TODO_OIDC_CLIENT_ID: '', TODO_ORIGIN: '' }, windowsHide: true, stdio: 'pipe'
+    cwd: consumer, env: { ...process.env, TODO_PORT: String(port), TODO_DATA_FILE: file, TODO_DATABASE_STATE: '', TODO_API_STATE: '', TODO_OIDC_ISSUER: '', TODO_OIDC_CLIENT_ID: '', TODO_OIDC_AUDIENCE: '', TODO_ORIGIN: '' }, windowsHide: true, stdio: 'pipe'
   });
   closed = once(child, 'close');
   let logs = ''; child.stderr.on('data', chunk => { logs += chunk; });
