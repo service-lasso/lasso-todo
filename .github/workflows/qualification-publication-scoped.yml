@@ -1,0 +1,32 @@
+name: scoped-template-qualification-publication
+on:
+  workflow_dispatch:
+  push:
+    branches: [develop]
+permissions:
+  contents: read
+jobs:
+  retain-scoped-result:
+    if: github.repository == 'service-lasso/service-template' && github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Prove exact source checkout
+        shell: bash
+        run: test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+      - name: Retain complete blocked role inventory
+        run: node scripts/produce-qualification-publication.mjs qualification-publication.json
+      - name: Preserve result before eligibility decision
+        uses: actions/upload-artifact@v4
+        with:
+          name: template-qualification-publication-${{ github.run_id }}-${{ github.run_attempt }}
+          path: qualification-publication.json
+          if-no-files-found: error
+          retention-days: 90
+      - name: Deny eligibility without actual admitted native proofs
+        run: node scripts/verify-qualification-publication.mjs qualification-publication.json "$GITHUB_SHA"

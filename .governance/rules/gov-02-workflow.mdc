@@ -1,0 +1,7 @@
+---
+description: Development workflow
+alwaysApply: true
+---
+# Workflow
+
+Use `develop` and an issue-scoped branch for normal development. Never use `main` as development input. Bind implementation to an active specification, make the smallest coherent change, verify it, and record evidence in the pull request.

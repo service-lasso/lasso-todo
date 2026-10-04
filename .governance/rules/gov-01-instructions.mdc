@@ -1,0 +1,7 @@
+---
+description: Governance entrypoint
+alwaysApply: true
+---
+# Governance instructions
+
+Apply `gov-02-workflow.mdc` through `gov-08-exploratory-review.mdc` in order. Human instructions, project intent and active specs take precedence over these rules.
