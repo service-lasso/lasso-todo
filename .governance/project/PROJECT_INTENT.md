@@ -23,4 +23,5 @@ New Todo adaptation and tests are authorized by the user's explicit template-ser
 Core #1673 and Todo #5 extend this service with optional Zitadel sign-in under SPEC-TODO-SSO SSO-1–5. Preserve the earlier storage modes and shared list identities; no Core/Admin auth or retained-data migration.
 
 Todo #7 / SSO-6–9 extends sign-in to the API resource-server boundary with API#5 and Core#1692. No browser-supplied token is trusted; paired startup/configuration fails closed.
-`nTodo #9 / SSO-10 follows observed Core import projection. Preserved env capability replaces metadata-only recognition; Core and protected tests remain unchanged.
+
+Todo #9 / SSO-10 follows observed Core import projection. Preserved env capability replaces metadata-only recognition; Core and protected tests remain unchanged.
