@@ -60,7 +60,7 @@ jobs:
           node - <<'NODE'
           const fs = require('node:fs'); const manifest = require('./service.json');
           manifest.version = process.env.RELEASE_VERSION;
-          manifest.artifact.source.version = process.env.RELEASE_VERSION;
+          manifest.artifact.source.tag = process.env.RELEASE_VERSION;
           fs.writeFileSync('release-assets/service.json', JSON.stringify(manifest, null, 2) + '\n');
           fs.writeFileSync('release-assets/source.json', JSON.stringify({ sourceSha: process.env.GITHUB_SHA, runId: process.env.GITHUB_RUN_ID, kind: 'development-service-candidate' }) + '\n');
           NODE
