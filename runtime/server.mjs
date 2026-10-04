@@ -18,7 +18,8 @@ const { createAuth } = await import('./auth.mjs');
 if (process.env.TODO_API_STATE && process.env.TODO_OIDC_ISSUER) {
   const apiRoot = path.dirname(path.dirname(path.resolve(process.env.TODO_API_STATE)));
   const manifest = JSON.parse(await readFile(path.join(apiRoot, 'service.json'), 'utf8'));
-  if (manifest.id !== 'todo-api' || manifest.meta?.apiAuthContract !== 'zitadel-introspection-v1' || manifest.env?.TODO_API_AUTH_MODE !== 'zitadel' || manifest.env.TODO_OIDC_ISSUER !== process.env.TODO_OIDC_ISSUER || manifest.env.TODO_OIDC_CLIENT_ID !== process.env.TODO_OIDC_CLIENT_ID || manifest.env.TODO_OIDC_AUDIENCE !== process.env.TODO_OIDC_AUDIENCE) throw Error('Configure the compatible secured Todo API; no anonymous fallback.');
+  const apiContract = manifest.env?.TODO_API_AUTH_CONTRACT ?? manifest.meta?.apiAuthContract;
+  if (manifest.id !== 'todo-api' || apiContract !== 'zitadel-introspection-v1' || manifest.env?.TODO_API_AUTH_MODE !== 'zitadel' || manifest.env.TODO_OIDC_ISSUER !== process.env.TODO_OIDC_ISSUER || manifest.env.TODO_OIDC_CLIENT_ID !== process.env.TODO_OIDC_CLIENT_ID || manifest.env.TODO_OIDC_AUDIENCE !== process.env.TODO_OIDC_AUDIENCE) throw Error('Configure the compatible secured Todo API; no anonymous fallback.');
 }
 const auth = await createAuth(process.env, port);
 let database;

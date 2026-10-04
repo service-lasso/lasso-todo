@@ -2,7 +2,7 @@ import { readFile, writeFile, access } from 'node:fs/promises';
 import path from 'node:path';
 
 const [directory, mode, issuerValue, clientId, projectId, apiClientId, secretFile, caFile] = process.argv.slice(2);
-if (!directory || !['enable', 'disable'].includes(mode)) throw Error('Stop Todo, then use configure-sso.mjs <installed-todo-directory> enable <https-issuer> <client-id> | disable.');
+if (!directory || !['enable', 'disable'].includes(mode)) throw Error('Stop Todo and the API, then use configure-sso.mjs <installed-todo-directory> enable <https-issuer> <web-client-id> <project-id> <api-client-id> <private-secret-file> [public-ca-file] | disable.');
 const root = path.resolve(directory), file = path.join(root, 'service.json');
 const manifest = JSON.parse(await readFile(file, 'utf8'));
 if (manifest.id !== 'todo' || manifest.artifact?.source?.repo !== 'service-lasso/lasso-todo') throw Error('Expected installed lasso-todo; no files changed.');
@@ -10,7 +10,8 @@ let apiManifest, apiFile = path.join(root, '..', 'todo-api', 'service.json');
 if (manifest.env.TODO_API_STATE) {
   try { apiManifest = JSON.parse(await readFile(apiFile, 'utf8')); }
   catch (error) { if (error.code !== 'ENOENT' || projectId || apiClientId || secretFile) throw error; }
-  if (apiManifest && (apiManifest.id !== 'todo-api' || apiManifest.meta?.apiAuthContract !== 'zitadel-introspection-v1')) throw Error('Upgrade the API to the secured introspection consumer first; no changes.');
+  const apiContract = apiManifest?.env?.TODO_API_AUTH_CONTRACT ?? apiManifest?.meta?.apiAuthContract;
+  if (apiManifest && (apiManifest.id !== 'todo-api' || apiContract !== 'zitadel-introspection-v1')) throw Error('Upgrade the API to the secured introspection consumer first; no changes.');
 }
 if (mode === 'enable') {
   const issuer = new URL(issuerValue);

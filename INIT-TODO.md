@@ -15,3 +15,5 @@ SPEC-018 AC-18.1–18.3 / SPEC-017: fixed CLI/Core roles, all TC01–12 and CA01
 
 - [ ] Issue #22 source implementation: retained blocked producer/strict reader and observed immutable publication projection implemented; actual CLI/Core catalog/native proof source remains absent. Obtain DIFFERENT entire cumulative source review and NEW complete-input admission before product execution. Source regression tests remain UNEXECUTED; real publication/qualification stays open.
 `lasso-todo` issue#1: adapt runtime, manifest, package/test/verify, service-owned CI; independent Core consumer execution and docs publication pending. Upstream template TODOs above remain historical.
+
+Todo #9: import-compatible paired helper and startup recognition; regression/review/released real provider checks required.
