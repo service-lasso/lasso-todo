@@ -1,0 +1,7 @@
+---
+description: Issue traceability
+alwaysApply: true
+---
+# Issues
+
+Feature work needs an implementation-grade issue bound to a spec and acceptance criteria. Do not close issues without verification evidence.
