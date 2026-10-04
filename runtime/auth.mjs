@@ -12,7 +12,7 @@ const cookie = (request, name) => {
 
 export async function createAuth(env, port) {
   const fields = ['TODO_OIDC_ISSUER', 'TODO_OIDC_CLIENT_ID', 'TODO_ORIGIN'];
-  if (!fields.some(field => env[field])) return undefined;
+  if (![...fields, 'TODO_OIDC_AUDIENCE'].some(field => env[field])) return undefined;
   if (!fields.every(field => env[field])) throw Error('Configure all Todo OIDC fields; no anonymous fallback.');
   const issuer = new URL(env.TODO_OIDC_ISSUER);
   const origin = new URL(env.TODO_ORIGIN);
@@ -20,6 +20,9 @@ export async function createAuth(env, port) {
   if (origin.protocol !== 'http:' || origin.hostname !== '127.0.0.1' || Number(origin.port) !== port || origin.username || origin.password || origin.search || origin.hash || origin.pathname !== '/') throw Error('Use the allocated loopback Todo origin.');
   const clientId = env.TODO_OIDC_CLIENT_ID;
   if (clientId.length > 256 || /\s/.test(clientId)) throw Error('Invalid OIDC client ID.');
+  const apiMode = Boolean(env.TODO_API_STATE);
+  const audience = env.TODO_OIDC_AUDIENCE;
+  if (apiMode && (!audience || audience.length > 256 || /[\s${}]/.test(audience))) throw Error('Configure the secured API project audience; no fallback.');
   const config = await oidc.discovery(issuer, clientId, { token_endpoint_auth_method: 'none' }, oidc.None(), { timeout: 5 });
   oidc.enableNonRepudiationChecks(config);
   const metadata = config.serverMetadata();
@@ -57,7 +60,7 @@ export async function createAuth(env, port) {
         const id = opaque(), verifier = oidc.randomPKCECodeVerifier(), nonce = oidc.randomNonce(), state = oidc.randomState();
         pending.set(id, { verifier, nonce, state, expires: Date.now() + 300000 });
         setCookie(response, pendingName, id, 300, '/auth');
-        redirect(response, oidc.buildAuthorizationUrl(config, { redirect_uri: callback, scope: 'openid profile email', code_challenge: await oidc.calculatePKCECodeChallenge(verifier), code_challenge_method: 'S256', state, nonce }).href);
+        redirect(response, oidc.buildAuthorizationUrl(config, { redirect_uri: callback, scope: 'openid profile email' + (apiMode ? ` urn:zitadel:iam:org:project:id:${audience}:aud` : ''), code_challenge: await oidc.calculatePKCECodeChallenge(verifier), code_challenge_method: 'S256', state, nonce }).href);
       } else if (request.method === 'GET' && url.pathname === '/auth/callback') {
         trim(pending);
         const id = cookie(request, pendingName), transaction = pending.get(id);
@@ -67,13 +70,14 @@ export async function createAuth(env, port) {
           if (!transaction) throw Error('Missing login transaction');
           const tokens = await oidc.authorizationCodeGrant(config, url, { pkceCodeVerifier: transaction.verifier, expectedState: transaction.state, expectedNonce: transaction.nonce, idTokenExpected: true });
           const claims = tokens.claims();
-          const seconds = Math.min(3600, Math.floor(claims.exp - Date.now() / 1000));
+          if (apiMode && (typeof tokens.access_token !== 'string' || !/^[A-Za-z0-9._~+/-]+={0,2}$/.test(tokens.access_token) || tokens.access_token.length > 8185 || typeof tokens.expires_in !== 'number' || !Number.isFinite(tokens.expires_in) || tokens.expires_in <= 0 || tokens.token_type?.toLowerCase() !== 'bearer')) throw Error('Valid access token required');
+          const seconds = Math.min(3600, Math.floor(claims.exp - Date.now() / 1000), apiMode ? Math.floor(tokens.expires_in) : 3600);
           if (!claims.sub || seconds <= 0) throw Error('Invalid session lifetime');
           trim(sessions);
           if (sessions.size >= maxEntries) throw Error('Session capacity reached');
           sessions.delete(cookie(request, cookieName));
           const sessionId = opaque();
-          sessions.set(sessionId, { csrf: opaque(), expires: Date.now() + seconds * 1000, name: String(claims.name ?? claims.preferred_username ?? 'Signed-in user').slice(0, 160) });
+          sessions.set(sessionId, { csrf: opaque(), expires: Date.now() + seconds * 1000, accessToken: apiMode ? tokens.access_token : undefined, name: String(claims.name ?? claims.preferred_username ?? 'Signed-in user').slice(0, 160) });
           setCookie(response, cookieName, sessionId, seconds);
           redirect(response, origin.href);
         } catch {
@@ -89,6 +93,11 @@ export async function createAuth(env, port) {
         json(response, 200, { redirect: logout });
       } else json(response, 404, { error: 'Not found' });
       return true;
+    },
+    apiHeaders(request) {
+      const session = current(request);
+      if (!apiMode || !session?.accessToken) throw Error('Authorized access token unavailable');
+      return { authorization: `Bearer ${session.accessToken}` };
     },
     authorize(request, response) {
       if (request.headers.host !== origin.host) { json(response, 403, { error: 'Use the configured Todo origin' }); return false; }

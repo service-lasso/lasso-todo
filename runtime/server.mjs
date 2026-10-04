@@ -15,6 +15,11 @@ catch (error) { if (error.code !== 'ENOENT') throw error; todos = []; }
 if (!Array.isArray(todos)) throw new Error('Invalid Todo data; preserve the file and inspect it.');
 const html = await readFile(new URL('./index.html', import.meta.url));
 const { createAuth } = await import('./auth.mjs');
+if (process.env.TODO_API_STATE && process.env.TODO_OIDC_ISSUER) {
+  const apiRoot = path.dirname(path.dirname(path.resolve(process.env.TODO_API_STATE)));
+  const manifest = JSON.parse(await readFile(path.join(apiRoot, 'service.json'), 'utf8'));
+  if (manifest.id !== 'todo-api' || manifest.meta?.apiAuthContract !== 'zitadel-introspection-v1' || manifest.env?.TODO_API_AUTH_MODE !== 'zitadel' || manifest.env.TODO_OIDC_ISSUER !== process.env.TODO_OIDC_ISSUER || manifest.env.TODO_OIDC_CLIENT_ID !== process.env.TODO_OIDC_CLIENT_ID || manifest.env.TODO_OIDC_AUDIENCE !== process.env.TODO_OIDC_AUDIENCE) throw Error('Configure the compatible secured Todo API; no anonymous fallback.');
+}
 const auth = await createAuth(process.env, port);
 let database;
 if (process.env.TODO_DATABASE_STATE) {
@@ -49,7 +54,7 @@ const server = createServer(async (request, response) => {
     }
     if (request.method === 'GET' && request.url === '/todos') {
       if (auth && !auth.authorize(request, response)) return;
-      if (api) { const result = await fetch(api + '/todos', { signal: AbortSignal.timeout(5000) }); return send(result.status, await result.json()); }
+      if (api) { const result = await fetch(api + '/todos', { headers: auth ? auth.apiHeaders(request) : {}, signal: AbortSignal.timeout(5000) }); return send(result.status, await result.json()); }
       return send(200, database ? await database.list() : todos);
     }
     if (request.method !== 'POST' || request.url !== '/todos') return send(404, { error: 'Not found' });
@@ -65,7 +70,7 @@ const server = createServer(async (request, response) => {
     try { input = JSON.parse(body); } catch { return send(400, { error: 'Invalid JSON' }); }
     if (typeof input?.title !== 'string' || !input.title.trim() || input.title.length > 200) return send(400, { error: 'Enter a title of 1–200 characters' });
     if (api) {
-      const result = await fetch(api + '/todos', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(input), signal: AbortSignal.timeout(5000) });
+      const result = await fetch(api + '/todos', { method: 'POST', headers: { 'content-type': 'application/json', ...(auth ? auth.apiHeaders(request) : {}) }, body: JSON.stringify(input), signal: AbortSignal.timeout(5000) });
       return send(result.status, await result.json());
     }
     const todo = { id: randomUUID(), title: input.title.trim() };

@@ -21,3 +21,5 @@ Inherited template producer notes in PROJECT_INTENT, BACKLOG, INIT-TODO and SPEC
 
 New Todo adaptation and tests are authorized by the user's explicit template-service correction. Keep PRs into develop, every commit pushed, execution isolated, release/publication evidence separate from docs and GA.
 Core #1673 and Todo #5 extend this service with optional Zitadel sign-in under SPEC-TODO-SSO SSO-1–5. Preserve the earlier storage modes and shared list identities; no Core/Admin auth or retained-data migration.
+
+Todo #7 / SSO-6–9 extends sign-in to the API resource-server boundary with API#5 and Core#1692. No browser-supplied token is trusted; paired startup/configuration fails closed.
