@@ -1,0 +1,14 @@
+name: branch-policy
+on:
+  pull_request:
+    branches: [develop]
+  push:
+    branches: [develop]
+permissions:
+  contents: read
+jobs:
+  policy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - run: test "$GITHUB_REF_NAME" != main || test "${{ github.event_name }}" = pull_request
