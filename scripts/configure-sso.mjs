@@ -10,7 +10,8 @@ let apiManifest, apiFile = path.join(root, '..', 'todo-api', 'service.json');
 if (manifest.env.TODO_API_STATE) {
   try { apiManifest = JSON.parse(await readFile(apiFile, 'utf8')); }
   catch (error) { if (error.code !== 'ENOENT' || projectId || apiClientId || secretFile) throw error; }
-  if (apiManifest && (apiManifest.id !== 'todo-api' || apiManifest.meta?.apiAuthContract !== 'zitadel-introspection-v1')) throw Error('Upgrade the API to the secured introspection consumer first; no changes.');
+  const apiContract = apiManifest?.env?.TODO_API_AUTH_CONTRACT ?? apiManifest?.meta?.apiAuthContract;
+  if (apiManifest && (apiManifest.id !== 'todo-api' || apiContract !== 'zitadel-introspection-v1')) throw Error('Upgrade the API to the secured introspection consumer first; no changes.');
 }
 if (mode === 'enable') {
   const issuer = new URL(issuerValue);
