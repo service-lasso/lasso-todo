@@ -13,7 +13,8 @@ test('audience-only partial identity cannot enable anonymous mode', async () => 
 
 test('paired helper accepts imported API env capability without metadata and rejects a wrong contract', async () => {
  const root = await mkdtemp(path.join(os.tmpdir(), 'todo-imported-api-'));
- for (const name of ['todo', 'todo-api']) await mkdir(path.join(root, name));
+ for (const name of ['todo', 'todo-api', 'zitadel']) await mkdir(path.join(root, name));
+ await writeFile(path.join(root, 'zitadel', 'service.json'), '{}');
  const todoFile = path.join(root, 'todo', 'service.json');
  const apiFile = path.join(root, 'todo-api', 'service.json');
  const todo = {id:'todo',artifact:{source:{repo:'service-lasso/lasso-todo'}},depend_on:['todo-api'],env:{TODO_API_STATE:'retained.state',TODO_DATA_FILE:'retained'}};

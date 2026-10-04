@@ -2,7 +2,7 @@ import { readFile, writeFile, access } from 'node:fs/promises';
 import path from 'node:path';
 
 const [directory, mode, issuerValue, clientId, projectId, apiClientId, secretFile, caFile] = process.argv.slice(2);
-if (!directory || !['enable', 'disable'].includes(mode)) throw Error('Stop Todo, then use configure-sso.mjs <installed-todo-directory> enable <https-issuer> <client-id> | disable.');
+if (!directory || !['enable', 'disable'].includes(mode)) throw Error('Stop Todo and the API, then use configure-sso.mjs <installed-todo-directory> enable <https-issuer> <web-client-id> <project-id> <api-client-id> <private-secret-file> [public-ca-file] | disable.');
 const root = path.resolve(directory), file = path.join(root, 'service.json');
 const manifest = JSON.parse(await readFile(file, 'utf8'));
 if (manifest.id !== 'todo' || manifest.artifact?.source?.repo !== 'service-lasso/lasso-todo') throw Error('Expected installed lasso-todo; no files changed.');
