@@ -28,7 +28,5 @@ jobs:
         if: always()
         with:
           name: lasso-todo-${{ runner.os }}
-          path: |
-            dist/*
-            output/package-verification.json
+          path: dist/*
           if-no-files-found: error
