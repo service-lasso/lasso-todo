@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Managed Todo app</title>
+<body>
+<h1>Todo app</h1>
+<p>This app runs as a Service Lasso service.</p>
+<form><label>Todo title <input name="title" required maxlength="200"></label> <button>Add</button></form>
+<p id="status" role="status"></p>
+<ul id="todos"></ul>
+<script>
+const status = document.querySelector('#status');
+async function list() {
+  const response = await fetch('/todos');
+  if (!response.ok) throw new Error('Could not load todos. Check this service in Admin.');
+  const todos = await response.json();
+  const list = document.querySelector('#todos');
+  list.replaceChildren();
+  for (const todo of todos) {
+    const item = document.createElement('li');
+    item.textContent = todo.title;
+    list.append(item);
+  }
+}
+document.querySelector('form').addEventListener('submit', async event => {
+  event.preventDefault();
+  try {
+    const input = event.target.elements.title;
+    const response = await fetch('/todos', { method: 'POST', headers: {'content-type': 'application/json'}, body: JSON.stringify({title: input.value}) });
+    if (!response.ok) throw new Error((await response.json()).error);
+    input.value = '';
+    await list();
+    status.textContent = 'Saved.';
+  } catch (error) { status.textContent = error.message; }
+});
+list().catch(error => { status.textContent = error.message; });
+</script>
+</body>
+</html>

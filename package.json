@@ -1,0 +1,17 @@
+{
+  "name": "@service-lasso/lasso-todo",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "pg": "8.23.0"
+  },
+  "description": "Template-derived managed Todo learning service",
+  "scripts": {
+    "test": "node --test tests/todo-service.test.mjs",
+    "package": "node scripts/package.mjs",
+    "verify": "node scripts/verify-service.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
