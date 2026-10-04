@@ -69,19 +69,31 @@
         "assetName": "lasso-todo-win32.zip",
         "archiveType": "zip",
         "command": "./runtime/server.mjs",
-        "args": []
+        "args": [],
+        "checksum": {
+          "algorithm": "sha256",
+          "assetName": "SHA256SUMS.txt"
+        }
       },
       "linux": {
         "assetName": "lasso-todo-linux.tar.gz",
         "archiveType": "tar.gz",
         "command": "./runtime/server.mjs",
-        "args": []
+        "args": [],
+        "checksum": {
+          "algorithm": "sha256",
+          "assetName": "SHA256SUMS.txt"
+        }
       },
       "darwin": {
         "assetName": "lasso-todo-darwin.tar.gz",
         "archiveType": "tar.gz",
         "command": "./runtime/server.mjs",
-        "args": []
+        "args": [],
+        "checksum": {
+          "algorithm": "sha256",
+          "assetName": "SHA256SUMS.txt"
+        }
       }
     }
   }
