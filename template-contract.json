@@ -1,0 +1,608 @@
+{
+  "schemaVersion": 1,
+  "templateVersion": "1.0.0-dev",
+  "contractDigest": "142942b2bf987e9b0f492bb39fb656d24b362a7ce609334829e6b43269f56860",
+  "inventory": [
+    {
+      "path": ".gitattributes",
+      "sha256": "d60f352d0db1404c70afb4bb8b2ca3fd1c610572aa40720e8a0b7baa7885418c",
+      "mode": "0644",
+      "bytes": 19
+    },
+    {
+      "path": ".github/branch-protection-checklist.md",
+      "sha256": "23e62c015e836d28271f4faa485389fefdf62c0e3759b060afb648358ca32ac9",
+      "mode": "0644",
+      "bytes": 256
+    },
+    {
+      "path": ".github/pull_request_template.md",
+      "sha256": "d601a16c2ba916407fa13bb69b0a0f522bdd081eca1c530c4a568221e3f5867b",
+      "mode": "0644",
+      "bytes": 182
+    },
+    {
+      "path": ".github/workflows/branch-policy.yml",
+      "sha256": "cbde3632cc310c9dbe1f9fb2651c3b0a729b98ace15931fa5d3ed943717ec212",
+      "mode": "0644",
+      "bytes": 309
+    },
+    {
+      "path": ".github/workflows/development-candidate.yml",
+      "sha256": "bb30a06d49a86ca0d646ea9abe3c50e16814ec0a536cd16b1258bd72a6392b09",
+      "mode": "0644",
+      "bytes": 5481
+    },
+    {
+      "path": ".github/workflows/qualification-publication-scoped.yml",
+      "sha256": "08d6ecf4071a263732b6e4ab77c5a92b8b193ac364a0e08b6f92c423c9e75ae0",
+      "mode": "0644",
+      "bytes": 1228
+    },
+    {
+      "path": ".github/workflows/release.yml",
+      "sha256": "a34d4df4b4c4fc69d245b7e1f574568aa0f95338ca1cde483dcf0b3c5342fcd7",
+      "mode": "0644",
+      "bytes": 5447
+    },
+    {
+      "path": ".github/workflows/validate-template.yml",
+      "sha256": "30f17e70f6c118fdcc3a1d8b5a12466a040f6a94354fdc860da105b6cf752afd",
+      "mode": "0644",
+      "bytes": 4246
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "c1ca410b1c7a4c6ad0fa2af9025f425febe412d95d74d76f9e75b4a2bbb768d3",
+      "mode": "0644",
+      "bytes": 61
+    },
+    {
+      "path": ".governance/project/BACKLOG.md",
+      "sha256": "dada5c62c4a765cff47906e39e32c37ed521e72ec11b479bf5bcb98fb55d7946",
+      "mode": "0644",
+      "bytes": 1778
+    },
+    {
+      "path": ".governance/project/ga-platform-scope.json",
+      "sha256": "159d644c161cf532c94d3bfe17ed55e32bf94c5d2843928945c450f6d8140c12",
+      "mode": "0644",
+      "bytes": 445
+    },
+    {
+      "path": ".governance/project/PROJECT_INTENT.md",
+      "sha256": "0d92e5f95915dcbce37321a4e214425f04625c2b64a440f8dea5b6dd6abf9402",
+      "mode": "0644",
+      "bytes": 2574
+    },
+    {
+      "path": ".governance/rules/gov-01-instructions.mdc",
+      "sha256": "9b8ba7989bbf3669789827f1094da0c5d8213d597305b232a209986e7a2f8569",
+      "mode": "0644",
+      "bytes": 252
+    },
+    {
+      "path": ".governance/rules/gov-02-workflow.mdc",
+      "sha256": "56b531741a8c05465cc8ef87becaecd3e2e99342bc8f16b82e4ff96a08fd6a5c",
+      "mode": "0644",
+      "bytes": 311
+    },
+    {
+      "path": ".governance/rules/gov-03-communication.mdc",
+      "sha256": "378f17a9da1d2d3dd9bfaed2ac061533935682c3ffa7398e99572d6e1fef1149",
+      "mode": "0644",
+      "bytes": 226
+    },
+    {
+      "path": ".governance/rules/gov-04-quality.mdc",
+      "sha256": "73e3ed43f64e0a035c4dbec67c6416520c6c121b683a65331ccb167da8fffcf1",
+      "mode": "0644",
+      "bytes": 224
+    },
+    {
+      "path": ".governance/rules/gov-05-testing.mdc",
+      "sha256": "bec5dea149ab96f1047db8158e3efe28df889b9d86f088437d7788bffbae1fa7",
+      "mode": "0644",
+      "bytes": 219
+    },
+    {
+      "path": ".governance/rules/gov-06-issues.mdc",
+      "sha256": "7d78f87d7e43ce31a028dfd3e8c103e38f9dab7e8a61df3924c92a1fd5a66937",
+      "mode": "0644",
+      "bytes": 209
+    },
+    {
+      "path": ".governance/rules/gov-07-tasks.mdc",
+      "sha256": "d0855a59fdb98b285a02a8c38e05c862eab8dbe365b1286307d429d823cd7aeb",
+      "mode": "0644",
+      "bytes": 175
+    },
+    {
+      "path": ".governance/rules/gov-08-exploratory-review.mdc",
+      "sha256": "7ebf6b6d832051ddaf7787e080db4134b7d7d51789493bada30aeb8e3c99d821",
+      "mode": "0644",
+      "bytes": 261
+    },
+    {
+      "path": ".governance/specs/SPEC-017-template-contract.md",
+      "sha256": "8a26bae68b411302c2298c73a7e8a56f6b9805e129f56b8fe329e9c77ece6fa6",
+      "mode": "0644",
+      "bytes": 13742
+    },
+    {
+      "path": ".governance/specs/SPEC-018-fixed-consumer-qualification.md",
+      "sha256": "276c0a8c315e75b9e4b89f18e60fccf07d5f0151f51fec73cc664d729c4a6fa7",
+      "mode": "0644",
+      "bytes": 7751
+    },
+    {
+      "path": "CHANGELOG.md",
+      "sha256": "c6944e84cd72d099adea714bab41b95b53ac5f3c09d04833e8f39da78ef06f91",
+      "mode": "0644",
+      "bytes": 178
+    },
+    {
+      "path": "config/example.env",
+      "sha256": "e74d268b19a6e5f8afedb520ffc44cba4e443e6f4a32fe314a016299136ada9f",
+      "mode": "0644",
+      "bytes": 41
+    },
+    {
+      "path": "docs/bootstrap-new-service-repo.md",
+      "sha256": "585af1393783be30c643eba02d701be638ccd5069232a79cd60f1e2747a969f8",
+      "mode": "0644",
+      "bytes": 194
+    },
+    {
+      "path": "docs/maintainer-context.md",
+      "sha256": "ddf177d102fcbefa80c0a83fda240fb124dbbc000fcddc89552d0f5ed41012ab",
+      "mode": "0644",
+      "bytes": 6626
+    },
+    {
+      "path": "docs/openspec-drafts/OPENSPEC-TRACKER.md",
+      "sha256": "abd43c9bd09c7f02d08fa5bb07cb9c648198666b0a263c7a60a685a57ffd3660",
+      "mode": "0644",
+      "bytes": 2045
+    },
+    {
+      "path": "docs/openspec-drafts/SPEC-SERVICE-TEMPLATE-REPO.md",
+      "sha256": "9f60a9b85171c225e3ad89df97c9cc1e393a1aa507123796d3d1ca87ddb88ef3",
+      "mode": "0644",
+      "bytes": 13396
+    },
+    {
+      "path": "docs/packaging.md",
+      "sha256": "9b0dc3adb14b6d68fd23a4d159b3f948f20ab14be8de1cecb658b5d1fda835a5",
+      "mode": "0644",
+      "bytes": 177
+    },
+    {
+      "path": "docs/qualification-publication.md",
+      "sha256": "018f8657e2f5be41f0e23018b01cd42168bb8370f93740cc0cb58ed1cb23d53a",
+      "mode": "0644",
+      "bytes": 2112
+    },
+    {
+      "path": "docs/reference/adjacent/SPEC-SERVICE-LASSO-HARNESS.md",
+      "sha256": "6e8acc8633a355c666db6bbce1659e8d3298ae899c4a03725c6094522a92be23",
+      "mode": "0644",
+      "bytes": 10436
+    },
+    {
+      "path": "docs/reference/DECISION-CONTEXT.md",
+      "sha256": "e6d105a9138d8a5b7ae543626cd532f0bba95a8200397363bd218a9f493ca205",
+      "mode": "0644",
+      "bytes": 1875
+    },
+    {
+      "path": "docs/reference/EXAMPLE-REPO-TREE.md",
+      "sha256": "29d9bcdf066ce00ce6698cc207d92cc0e0fd35974d1c9cadb67bb68018f1189a",
+      "mode": "0644",
+      "bytes": 1641
+    },
+    {
+      "path": "docs/reference/EXAMPLE-service-harness.json",
+      "sha256": "edc461ec592c909f15923c6363ba2a71e7da0db7369732088469852d80b691e9",
+      "mode": "0644",
+      "bytes": 486
+    },
+    {
+      "path": "docs/reference/EXAMPLE-service.json",
+      "sha256": "7bb320fced7b999de3d081a8220a31d4c7769cf5b1d2b9c58b5f6827cdf38dc1",
+      "mode": "0644",
+      "bytes": 963
+    },
+    {
+      "path": "docs/reference/EXAMPLE-verify.ps1",
+      "sha256": "b3d9ca55a727ad1407af66f8ec86e75b55698efb56e7a7d0a59a0075a940c7a9",
+      "mode": "0644",
+      "bytes": 296
+    },
+    {
+      "path": "docs/reference/EXAMPLE-verify.sh",
+      "sha256": "725741bcc8e397e6e427ecce0eaa947346379aea00deff250e30aaf56ff63324",
+      "mode": "0644",
+      "bytes": 262
+    },
+    {
+      "path": "docs/reference/PROPOSED-CODEBASE-STRUCTURE.md",
+      "sha256": "a875b8edc81a844220ab3ee87642c24605258f1a7d57f5442b7c2b832f088966",
+      "mode": "0644",
+      "bytes": 8123
+    },
+    {
+      "path": "docs/reference/SERVICE-STRUCTURE-REVIEW.md",
+      "sha256": "7b1f6a75cb3556f720d63c8a550c3fbe52dfad793e66f326b97265aca8776377",
+      "mode": "0644",
+      "bytes": 17229
+    },
+    {
+      "path": "docs/reference/SERVICE-TEMPLATE-REPO.md",
+      "sha256": "13ba8ad4134616d7a6d9bf293530a74a58b74975ed8fefd4e7e397d3a28dd569",
+      "mode": "0644",
+      "bytes": 8223
+    },
+    {
+      "path": "docs/reference/shared-runtime/ARCHITECTURE-DECISIONS.md",
+      "sha256": "e68cff98086fa7c53e8be6c537af0a5a51f1815d5c2bcf750a97eca639321784",
+      "mode": "0644",
+      "bytes": 19052
+    },
+    {
+      "path": "docs/reference/shared-runtime/QUESTION-LIST-AND-CODE-VALIDATION.md",
+      "sha256": "bf7634fce52a74aba7d9f0227202b3baab67d5e0a654b6efec1a1ca25377a490",
+      "mode": "0644",
+      "bytes": 12699
+    },
+    {
+      "path": "docs/reference/shared-runtime/SERVICE-MANAGER-BEHAVIOR.md",
+      "sha256": "227ab4a497e46c30ae80ff002cd52cb79657cd58ad9208d53ca10a7fa40a5631",
+      "mode": "0644",
+      "bytes": 11391
+    },
+    {
+      "path": "docs/runtime-extension-points.md",
+      "sha256": "62f65519f8b3bc66ce6a2af4e81578d064ff1d6764ac1d6df7a848318f3869b7",
+      "mode": "0644",
+      "bytes": 192
+    },
+    {
+      "path": "docs/service-contract.md",
+      "sha256": "475266f5a91c6ab9beca746f9453ae12c5cda41620ad0e839620cc9fee19348c",
+      "mode": "0644",
+      "bytes": 184
+    },
+    {
+      "path": "docs/service-json-reference.md",
+      "sha256": "394c170e4635296d72741a9d17277b22bedd56c2863e7e70ef69ab46598748a7",
+      "mode": "0644",
+      "bytes": 190
+    },
+    {
+      "path": "docs/template-contract.md",
+      "sha256": "768de348391026d1f25c5223421ac045e92269217ec92a6b83e101dfde2d953c",
+      "mode": "0644",
+      "bytes": 8511
+    },
+    {
+      "path": "docs/validation.md",
+      "sha256": "97d3961b5c17f62bc9e71287fc72dbeffcaf7266c3f3856845b19dcaa81db5e3",
+      "mode": "0644",
+      "bytes": 178
+    },
+    {
+      "path": "INIT-TODO.md",
+      "sha256": "c65b434ebbc31936513c0620fded4f2683fc1624ad0293c7fa40238f8a335075",
+      "mode": "0644",
+      "bytes": 2590
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "7b1ca93fa735ecd7caf2cc2d41f0fd348f9c84f2737f03511c794558e81fa0d6",
+      "mode": "0644",
+      "bytes": 10251
+    },
+    {
+      "path": "README.md",
+      "sha256": "2db3e4588b18a39d3b32d932ecd916bbcc75bdef78e35f8a4581da07ceb1c78b",
+      "mode": "0644",
+      "bytes": 1392
+    },
+    {
+      "path": "runtime/darwin/echo-service.sh",
+      "sha256": "60742bc00c0328a0e8978bf33899420c532e94cbdd1c90e280cb32adb33d002a",
+      "mode": "0644",
+      "bytes": 99
+    },
+    {
+      "path": "runtime/linux/echo-service.sh",
+      "sha256": "60742bc00c0328a0e8978bf33899420c532e94cbdd1c90e280cb32adb33d002a",
+      "mode": "0644",
+      "bytes": 99
+    },
+    {
+      "path": "runtime/win32/echo-service.ps1",
+      "sha256": "c7f64c2aace81b41c2e3ae81c42573974c7ae065e4933779c0835819df2a4048",
+      "mode": "0644",
+      "bytes": 186
+    },
+    {
+      "path": "scripts/ga-platform-scope-lib.mjs",
+      "sha256": "91d12c7d22a6016fbb994f65c72fd44a9b764dd9e7f2535e3e4ec7fa30523f4d",
+      "mode": "0644",
+      "bytes": 5709
+    },
+    {
+      "path": "scripts/generate-template-contract.mjs",
+      "sha256": "3e5cc0e2bc56c22746498703c45a5838e5084213b841bda93e1b105a88c18d26",
+      "mode": "0644",
+      "bytes": 3657
+    },
+    {
+      "path": "scripts/package.ps1",
+      "sha256": "f747f91f0e3a9e4b0f8767f39c0d768985faaa9ce38f75e0f2412193b1ec10dc",
+      "mode": "0644",
+      "bytes": 760
+    },
+    {
+      "path": "scripts/package.sh",
+      "sha256": "d6072426993ec3dc558bfb38f860700e79f906f14e96050c304bc34044d7feb7",
+      "mode": "0644",
+      "bytes": 650
+    },
+    {
+      "path": "scripts/produce-qualification-publication.mjs",
+      "sha256": "e50da76783ba3c7ed351b4d258aa52ee82355b24e1f6d51f1cc5a036b0cd8bb2",
+      "mode": "0644",
+      "bytes": 1492
+    },
+    {
+      "path": "scripts/publish-development-candidate.mjs",
+      "sha256": "58ac14a97a49cbcb1d0fc7aa1890b8739a7de1c25faa055424fa1add670dbb2b",
+      "mode": "0644",
+      "bytes": 25722
+    },
+    {
+      "path": "scripts/qualification-cli-lib.mjs",
+      "sha256": "91b36bc93629b42ec87d442c6280de73718005480a2b3ca325bc3a4630f2d7f3",
+      "mode": "0644",
+      "bytes": 1615
+    },
+    {
+      "path": "scripts/qualification-publication-lib.mjs",
+      "sha256": "6b17120d3509010bb474fb87f2072959ed146c8ee69b52ad289ff8ae247c795a",
+      "mode": "0644",
+      "bytes": 10839
+    },
+    {
+      "path": "scripts/test.ps1",
+      "sha256": "4cef8a074e337106c1e6b1b554bec635a096cf809bd53094c3309fa85b6f429a",
+      "mode": "0644",
+      "bytes": 2412
+    },
+    {
+      "path": "scripts/test.sh",
+      "sha256": "bbb811fcf3922edee8c7708e7f97d6b23f09dc21b0f69ebd7303563a88b4c71f",
+      "mode": "0644",
+      "bytes": 2367
+    },
+    {
+      "path": "scripts/validate-development-candidate-workflow.mjs",
+      "sha256": "bd30453b48217b4f06f128b96c8bc724fa024e20c3ba83aabba18baba1b080c7",
+      "mode": "0644",
+      "bytes": 3835
+    },
+    {
+      "path": "scripts/verify-qualification-publication.mjs",
+      "sha256": "ecb7c46751aca31118199c773eeb7bbf200b2168ed1dc364d46a350ebbd4dbf9",
+      "mode": "0644",
+      "bytes": 946
+    },
+    {
+      "path": "scripts/verify-template-contract.mjs",
+      "sha256": "c8a31da84ba16786d6adc5426c4c09c40f1f0fa785cb81fcb42e09c8f1ba2aa9",
+      "mode": "0644",
+      "bytes": 28086
+    },
+    {
+      "path": "scripts/verify.ps1",
+      "sha256": "9c04444ac8c59f52ccb17b2748a475f81978e31b232a332f750102ca61702d16",
+      "mode": "0644",
+      "bytes": 1524
+    },
+    {
+      "path": "scripts/verify.sh",
+      "sha256": "c655077b3337558740b45234389f2544ff73f67c2006773fed14e916774b46e2",
+      "mode": "0644",
+      "bytes": 1338
+    },
+    {
+      "path": "service.json",
+      "sha256": "4976c2d868a186fd39e12cab6e03c2e83e573db7df72ae83e9e39f5b556902e9",
+      "mode": "0644",
+      "bytes": 3709
+    },
+    {
+      "path": "services/@java/service.json",
+      "sha256": "1005de6afebb2319df233effee8dab77b168b7007cb93e0b8070ae52bc5d09a7",
+      "mode": "0644",
+      "bytes": 1311
+    },
+    {
+      "path": "services/@localcert/service.json",
+      "sha256": "eb365cc9519723b3d7280880f0a3c2b67113499591a814de15fa2386aac90eaa",
+      "mode": "0644",
+      "bytes": 1186
+    },
+    {
+      "path": "services/@nginx/service.json",
+      "sha256": "3bd16b09b51d4b81e7b85bdc516e46e91bd6b0b13e3da5efc9eed3cf2fcbfc32",
+      "mode": "0644",
+      "bytes": 3141
+    },
+    {
+      "path": "services/@node/service.json",
+      "sha256": "f175634f2424959eefca062c13d1855057fb3df042426a15a136860f62704945",
+      "mode": "0644",
+      "bytes": 1248
+    },
+    {
+      "path": "services/@python/service.json",
+      "sha256": "cf4608ff578f8c7e57ba84c5f6fbd293bef9bfa0c1968fc79dabf93d2c4acb80",
+      "mode": "0644",
+      "bytes": 946
+    },
+    {
+      "path": "services/@serviceadmin/service.json",
+      "sha256": "436d6ca3d5b43b888e1689a7526ff53b23919bbdadddbddc79f8970441e377a6",
+      "mode": "0644",
+      "bytes": 1207
+    },
+    {
+      "path": "services/@traefik/service.json",
+      "sha256": "a19b324a0e536e178a5437dc428d5cb514f41e1b0a129c7cf537482c2415d836",
+      "mode": "0644",
+      "bytes": 9556
+    },
+    {
+      "path": "services/echo-service/service.json",
+      "sha256": "bf92735c43c859ccc4f9054827cde027f3fe56262d730455acf0357779c03ebb",
+      "mode": "0644",
+      "bytes": 2041
+    },
+    {
+      "path": "services/README.md",
+      "sha256": "b7279461ea076c57b9868f8306a8762a411d6b775a014b0f873e1d3cbd6622d3",
+      "mode": "0644",
+      "bytes": 1034
+    },
+    {
+      "path": "tests/development-candidate-workflow.test.mjs",
+      "sha256": "8531fdfff76830df988419c2243115ed135a81036ff85b1a1f2cdfe4c2de986c",
+      "mode": "0644",
+      "bytes": 43459
+    },
+    {
+      "path": "tests/qualification-publication.test.mjs",
+      "sha256": "67b97269f245e8d4ba19b9b24ab2cbb0a32946d5212faabbe6e99390c0b2c414",
+      "mode": "0644",
+      "bytes": 6029
+    },
+    {
+      "path": "tests/template-contract.test.mjs",
+      "sha256": "cbabc6e1c8ecebc7735380f3591eebc8655bf6932e6d50b2d82e7642cb8a2365",
+      "mode": "0644",
+      "bytes": 27990
+    },
+    {
+      "path": "verify/service-harness.json",
+      "sha256": "edc461ec592c909f15923c6363ba2a71e7da0db7369732088469852d80b691e9",
+      "mode": "0644",
+      "bytes": 486
+    }
+  ],
+  "quotas": {
+    "maximumFiles": 128,
+    "maximumTotalBytes": 468462,
+    "maximumManifestBytes": 6298,
+    "maximumProvenanceBytes": 479,
+    "maximumConfigFiles": 16,
+    "maximumConfigBytes": 65536,
+    "maximumArchiveBytes": 262144,
+    "maximumArchiveExpandedBytes": 524288,
+    "maximumArchiveEntries": 128,
+    "maximumArchivePathDepth": 12
+  },
+  "authoring": {
+    "provenanceFile": "template-provenance.json",
+    "manifest": {
+      "path": "service.json",
+      "fields": {
+        "/id": {
+          "mode": "author-editable",
+          "type": "string",
+          "maximumBytes": 63,
+          "pattern": "^[a-z][a-z0-9-]{0,62}$"
+        },
+        "/name": {
+          "mode": "author-editable",
+          "type": "string",
+          "maximumBytes": 120,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9 .,'()/_-]{0,119}$"
+        },
+        "/description": {
+          "mode": "author-editable",
+          "type": "string",
+          "maximumBytes": 512,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9 .,'()/:;_!?-]{0,511}$"
+        },
+        "/version": {
+          "mode": "author-editable",
+          "type": "string",
+          "maximumBytes": 64,
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?$"
+        },
+        "/enabled": {
+          "mode": "author-editable",
+          "type": "boolean"
+        },
+        "/meta/developers": {
+          "mode": "author-editable",
+          "type": "array",
+          "maximumItems": 8,
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "maximumBytes": 120,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9 .,'_-]{0,119}$"
+              }
+            }
+          }
+        },
+        "/meta/repository/url": {
+          "mode": "github-derived-identity",
+          "type": "string",
+          "maximumBytes": 256,
+          "pattern": "^https://github\\.com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+\\.git$"
+        },
+        "/meta/tags": {
+          "mode": "author-editable",
+          "type": "array",
+          "maximumItems": 12,
+          "items": {
+            "type": "string",
+            "maximumBytes": 48,
+            "pattern": "^[a-z0-9][a-z0-9-]{0,47}$"
+          }
+        }
+      }
+    },
+    "configuration": {
+      "pathPrefix": "config/",
+      "allowedPaths": [
+        "config/example.env"
+      ],
+      "forbiddenNamePattern": "(?:secret|token|password|credential|private[_-]?key)",
+      "forbiddenValuePattern": "(?:^|[A-Z0-9_]*_)(?:SECRET|TOKEN|PASSWORD|CREDENTIAL|PRIVATE_KEY)\\s*=|https?:\\/\\/|git\\+"
+    }
+  },
+  "provenance": {
+    "required": [
+      "schemaVersion",
+      "templateRepository",
+      "templateCommit",
+      "templateVersion",
+      "contractDigest",
+      "origin"
+    ],
+    "templateRepository": "service-lasso/service-template",
+    "originKinds": [
+      "local-archive",
+      "github-derived"
+    ],
+    "maximumRepositoryBytes": 140
+  }
+}

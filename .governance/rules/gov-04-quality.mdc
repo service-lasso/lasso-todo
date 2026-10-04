@@ -1,0 +1,7 @@
+---
+description: Quality gates
+alwaysApply: true
+---
+# Quality
+
+Changes require explicit scope, testable acceptance criteria, focused verification, documentation and traceability. Passing builds alone do not prove behavior.

@@ -1,0 +1,117 @@
+name: development-template-candidate
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [develop]
+
+permissions:
+  contents: read
+
+jobs:
+  bind-candidate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Verify exact checked-out revision
+        shell: bash
+        run: test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+      - name: Verify the checked-in template contract
+        run: node scripts/generate-template-contract.mjs && git diff --exit-code -- template-contract.json
+      - name: Run template contract and publication regression tests
+        run: node --test tests/template-contract.test.mjs tests/development-candidate-workflow.test.mjs tests/qualification-publication.test.mjs
+      - name: Validate development-candidate workflow structure
+        run: node scripts/validate-development-candidate-workflow.mjs
+      - name: Validate Actions syntax
+        uses: docker://rhysd/actionlint:1.7.7
+        with:
+          args: .github/workflows/development-candidate.yml
+      - name: Bind immutable development candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p candidate
+          git archive --format=tar "$GITHUB_SHA" | gzip -n > candidate/service-template.tar.gz
+          archive_sha256="$(sha256sum candidate/service-template.tar.gz | awk '{print $1}')"
+          contract_sha256="$(sha256sum template-contract.json | awk '{print $1}')"
+          template_tag="template-v$(node -p "require('./template-contract.json').templateVersion")-${GITHUB_SHA}"
+          export ARCHIVE_SHA256="$archive_sha256"
+          export CONTRACT_SHA256="$contract_sha256"
+          export TEMPLATE_TAG="$template_tag"
+          node - <<'NODE'
+          const fs = require('node:fs');
+          const policy = require('./template-contract.json');
+          fs.writeFileSync('candidate/template-candidate.json', JSON.stringify({
+            schemaVersion: 1, kind: 'development-template-candidate', templateCommit: process.env.GITHUB_SHA,
+            templateVersion: policy.templateVersion, contractDigest: policy.contractDigest,
+            archiveSha256: process.env.ARCHIVE_SHA256, contractSha256: process.env.CONTRACT_SHA256,
+            releaseTag: process.env.TEMPLATE_TAG
+          }, null, 2) + '\n');
+          NODE
+          cp template-contract.json candidate/template-contract.json
+          (cd candidate && sha256sum service-template.tar.gz template-candidate.json template-contract.json > SHA256SUMS)
+      - name: Verify the owner-controlled candidate tuple
+        shell: bash
+        run: |
+          set -euo pipefail
+          project_root="$(mktemp -d)"
+          tar -xzf candidate/service-template.tar.gz -C "$project_root"
+          export PROJECT_ROOT="$project_root"
+          node - <<'NODE'
+          const fs = require('node:fs'); const path = require('node:path'); const candidate = require('./candidate/template-candidate.json');
+          fs.writeFileSync(path.join(process.env.PROJECT_ROOT, 'template-provenance.json'), JSON.stringify({
+            schemaVersion: 1, templateRepository: 'service-lasso/service-template', templateCommit: candidate.templateCommit,
+            templateVersion: candidate.templateVersion, contractDigest: candidate.contractDigest,
+            origin: { kind: 'local-archive', archiveSha256: candidate.archiveSha256 }
+          }, null, 2) + '\n');
+          NODE
+          node scripts/verify-template-contract.mjs --template-root "$GITHUB_WORKSPACE" --project-root "$project_root" --candidate candidate/template-candidate.json --candidate-archive candidate/service-template.tar.gz
+          node -e "import('./scripts/publish-development-candidate.mjs').then(({ inspectCandidateDirectory }) => inspectCandidateDirectory('candidate'))"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: template-candidate-${{ github.sha }}
+          path: candidate/
+          if-no-files-found: error
+
+  publish-candidate:
+    needs: bind-candidate
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-latest
+    environment: development-candidate
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Verify exact checked-out revision
+        shell: bash
+        run: test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+      - uses: actions/download-artifact@v4
+        with:
+          name: template-candidate-${{ github.sha }}
+          path: candidate
+      - name: Publish held bytes through verified private draft and immutable readback
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: node scripts/publish-development-candidate.mjs publish candidate "$GITHUB_REPOSITORY" "$GITHUB_REF" "$GITHUB_SHA" > verified-publication.json
+      - name: Retain observed publication metadata after immutable same-byte readback
+        uses: actions/upload-artifact@v4
+        with:
+          name: template-observed-publication-${{ github.run_id }}-${{ github.run_attempt }}
+          path: verified-publication.json
+          if-no-files-found: error
+          retention-days: 90
